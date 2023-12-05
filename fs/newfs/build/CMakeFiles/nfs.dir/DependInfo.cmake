@@ -9,6 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/students/210110424/user-land-filesystem/fs/newfs/src/nfs.c" "CMakeFiles/nfs.dir/src/nfs.c.o" "gcc" "CMakeFiles/nfs.dir/src/nfs.c.o.d"
+  "/home/students/210110424/user-land-filesystem/fs/newfs/src/nfs_debug.c" "CMakeFiles/nfs.dir/src/nfs_debug.c.o" "gcc" "CMakeFiles/nfs.dir/src/nfs_debug.c.o.d"
+  "/home/students/210110424/user-land-filesystem/fs/newfs/src/nfs_utils.c" "CMakeFiles/nfs.dir/src/nfs_utils.c.o" "gcc" "CMakeFiles/nfs.dir/src/nfs_utils.c.o.d"
   )
 
 # Targets to which this target links.

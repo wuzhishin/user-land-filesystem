@@ -87,7 +87,7 @@ struct sfs_inode
     int                dir_cnt;
     struct sfs_dentry* dentry;                        /* 指向该inode的dentry */
     struct sfs_dentry* dentrys;                       /* 所有目录项 */
-    uint8_t*           data;           
+    uint8_t*           data;          
 };  
 
 struct sfs_dentry

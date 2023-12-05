@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "nfs.h": "c",
+        "cmath": "c",
+        "type_traits": "c"
+    }
+}
