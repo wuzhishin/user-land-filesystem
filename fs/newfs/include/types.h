@@ -39,7 +39,7 @@ typedef enum nfs_file_type {
 
 #define NFS_MAX_FILE_NAME       128
 #define NFS_INODE_PER_FILE      1
-#define NFS_DATA_PER_FILE       16
+#define NFS_DATA_PER_FILE       4
 #define NFS_DEFAULT_PERM        0777
 
 #define NFS_IOC_MAGIC           'S'
@@ -86,6 +86,7 @@ struct nfs_super {
     int                sz_usage;
     
     int                max_ino;
+    int                max_data;
     uint8_t*           map_inode;
     uint8_t*           map_data;
     int                map_inode_blks;
@@ -110,8 +111,8 @@ struct nfs_inode {
     int                dir_cnt;
     struct nfs_dentry* dentry;                        /* 指向该inode的dentry */
     struct nfs_dentry* dentrys;                       /* 所有目录项 */
-    uint8_t*           data;    
-    int data_block[16];
+    uint8_t*           data[NFS_DATA_PER_FILE];    
+    int data_block[NFS_DATA_PER_FILE];
 };
 
 struct nfs_dentry {
@@ -160,7 +161,7 @@ struct nfs_inode_d
     int                size;                          /* 文件已占用空间 */
     char               target_path[NFS_MAX_FILE_NAME];/* store traget path when it is a symlink */
     int                dir_cnt;
-    int data_block[16];
+    int data_block[NFS_DATA_PER_FILE];
     NFS_FILE_TYPE      ftype;   
 };  
 
