@@ -197,10 +197,8 @@ struct nfs_inode* nfs_alloc_inode(struct nfs_dentry * dentry) {
                 //将空闲的data块号记入inode中
                 inode->data_block[blk_cnt] = bno_cursor;
                 blk_cnt++;
-                printf("test1\n");
                 if(blk_cnt == NFS_DATA_PER_FILE){
                     is_find_enough_blk = TRUE;
-                    printf("test2\n");
                     break;
                 }
             }
