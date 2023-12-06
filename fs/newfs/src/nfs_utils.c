@@ -194,7 +194,6 @@ struct nfs_inode* nfs_alloc_inode(struct nfs_dentry * dentry) {
         for (bit_cursor = 0; bit_cursor < UINT8_BITS; ++bit_cursor) {
             if((nfs_super.map_data[byte_cursor] & (0x1 << bit_cursor)) == 0) {    
                                                       /* 当前bno_cursor位置空闲 */
-                
                 //将空闲的data块号记入inode中
                 inode->data_block[blk_cnt] = bno_cursor;
                 blk_cnt++;
