@@ -39,7 +39,7 @@ typedef enum nfs_file_type {
 
 #define NFS_MAX_FILE_NAME       128
 #define NFS_INODE_PER_FILE      1
-#define NFS_DATA_PER_FILE       4
+#define NFS_DATA_PER_FILE       6
 #define NFS_DEFAULT_PERM        0777
 
 #define NFS_IOC_MAGIC           'S'
