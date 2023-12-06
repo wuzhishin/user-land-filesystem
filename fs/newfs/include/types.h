@@ -99,6 +99,8 @@ struct nfs_super {
     boolean            is_mounted;
 
     struct nfs_dentry* root_dentry;
+    int inode_num;
+    int super_blks;
 };
 
 struct nfs_inode {
@@ -111,7 +113,7 @@ struct nfs_inode {
     struct nfs_dentry* dentry;                        /* 指向该inode的dentry */
     struct nfs_dentry* dentrys;                       /* 所有目录项 */
     uint8_t*           data;    
-    int data_block[16];
+    int data_block;
 };
 
 struct nfs_dentry {
@@ -160,7 +162,7 @@ struct nfs_inode_d
     int                size;                          /* 文件已占用空间 */
     char               target_path[NFS_MAX_FILE_NAME];/* store traget path when it is a symlink */
     int                dir_cnt;
-    int data_block[16];
+    int data_block;
     NFS_FILE_TYPE      ftype;   
 };  
 

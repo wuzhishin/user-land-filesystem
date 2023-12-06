@@ -374,7 +374,7 @@ int main(int argc, char **argv)
     int ret;
 	struct fuse_args args = FUSE_ARGS_INIT(argc, argv);
 
-	nfs_options.device = strdup("TODO: 这里填写你的ddriver设备路径");
+	nfs_options.device = strdup("/home/students/210110424/ddriver");
 
 	if (fuse_opt_parse(&args, &nfs_options, option_spec, NULL) == -1)
 		return -1;
