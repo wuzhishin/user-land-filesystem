@@ -111,7 +111,7 @@ struct nfs_inode {
     int                dir_cnt;
     struct nfs_dentry* dentry;                        /* 指向该inode的dentry */
     struct nfs_dentry* dentrys;                       /* 所有目录项 */
-    uint8_t*           data[NFS_DATA_PER_FILE];    
+    uint8_t*           data;    
     int data_block[NFS_DATA_PER_FILE];
 };
 

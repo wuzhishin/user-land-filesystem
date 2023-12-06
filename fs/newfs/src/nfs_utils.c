@@ -185,31 +185,31 @@ struct nfs_inode* nfs_alloc_inode(struct nfs_dentry * dentry) {
     inode->size = 0;
                                                       /* dentry指向inode */
     
-    for (byte_cursor = 0; byte_cursor < NFS_BLKS_SZ(nfs_super.map_data_blks); 
-         byte_cursor++)
-    {
-        //再按照bit查找data位图
+    // for (byte_cursor = 0; byte_cursor < NFS_BLKS_SZ(nfs_super.map_data_blks); 
+    //      byte_cursor++)
+    // {
+    //     //再按照bit查找data位图
         
-        for (bit_cursor = 0; bit_cursor < UINT8_BITS; bit_cursor++) {
-            if((nfs_super.map_data[byte_cursor] & (0x1 << bit_cursor)) == 0) {    
-                                                      /* 当前bno_cursor位置空闲 */
-                nfs_super.map_data[byte_cursor] |= (0x1 << bit_cursor);
-                //将空闲的data块号记入inode中
-                inode->data_block[blk_cnt] = bno_cursor;
-                blk_cnt++;
-                printf("test1\n");
-                if(blk_cnt == NFS_DATA_PER_FILE){
-                    is_find_enough_blk = TRUE;
-                    printf("test2\n");
-                    break;
-                }
-            }
-            bno_cursor++;
-        }
-        if (is_find_enough_blk) {
-            break;
-        }
-    }
+    //     for (bit_cursor = 0; bit_cursor < UINT8_BITS; bit_cursor++) {
+    //         if((nfs_super.map_data[byte_cursor] & (0x1 << bit_cursor)) == 0) {    
+    //                                                   /* 当前bno_cursor位置空闲 */
+    //             nfs_super.map_data[byte_cursor] |= (0x1 << bit_cursor);
+    //             //将空闲的data块号记入inode中
+    //             inode->data_block[blk_cnt] = bno_cursor;
+    //             blk_cnt++;
+    //             printf("test1\n");
+    //             if(blk_cnt == NFS_DATA_PER_FILE){
+    //                 is_find_enough_blk = TRUE;
+    //                 printf("test2\n");
+    //                 break;
+    //             }
+    //         }
+    //         bno_cursor++;
+    //     }
+    //     if (is_find_enough_blk) {
+    //         break;
+    //     }
+    // }
     
 
     if (!is_find_enough_blk || bno_cursor == nfs_super.max_data){
@@ -233,17 +233,17 @@ struct nfs_inode* nfs_alloc_inode(struct nfs_dentry * dentry) {
     //         inode->data[i] = (uint8_t *)malloc(NFS_BLKS_SZ(1));
     //     }
     // }
-    // if (NFS_IS_REG(inode)) {
-    //     inode->data = (uint8_t *)malloc(NFS_BLKS_SZ(NFS_DATA_PER_FILE));
-    //     nfs_alloc_data();
-    // }
+    if (NFS_IS_REG(inode)) {
+        inode->data = (uint8_t *)malloc(NFS_BLKS_SZ(NFS_DATA_PER_FILE));
+        nfs_alloc_data();
+    }
 
     //inode指向文件类型需要预分配数据指针
-    if (NFS_IS_REG(inode)) {
-        for(blk_cnt = 0; blk_cnt < NFS_DATA_PER_FILE; blk_cnt++){
-            inode->data[blk_cnt] = (uint8_t *)malloc(NFS_BLKS_SZ(1));
-        }
-    }
+    // if (NFS_IS_REG(inode)) {
+    //     for(blk_cnt = 0; blk_cnt < NFS_DATA_PER_FILE; blk_cnt++){
+    //         inode->data[blk_cnt] = (uint8_t *)malloc(NFS_BLKS_SZ(1));
+    //     }
+    // }
 
     return inode;
 }
@@ -321,7 +321,7 @@ int nfs_sync_inode(struct nfs_inode * inode) {
     }
     else if (NFS_IS_REG(inode)) {
         for(int i=0; i<NFS_DATA_PER_FILE; ++i){
-            if (nfs_driver_write(NFS_DATA_OFS(inode->data_block[i]), inode->data[i], 
+            if (nfs_driver_write(NFS_DATA_OFS(inode->data_block[i]), inode->data, 
                              NFS_BLKS_SZ(1)) != NFS_ERROR_NONE) {
                 NFS_DBG("[%s] io error\n", __func__);
                 return -NFS_ERROR_IO;
@@ -480,9 +480,9 @@ struct nfs_inode* nfs_read_inode(struct nfs_dentry * dentry, int ino) {
     }
     else if (NFS_IS_REG(inode)) {
         for(int i=0; i<=NFS_DATA_PER_FILE-1; ++i){
-            inode->data[i] = (uint8_t *)malloc(NFS_BLKS_SZ(1));
+            inode->data = (uint8_t *)malloc(NFS_BLKS_SZ(1));
             
-            if (nfs_driver_read(NFS_DATA_OFS(inode->data_block[i]), (uint8_t *)inode->data[i], 
+            if (nfs_driver_read(NFS_DATA_OFS(inode->data_block[i]), (uint8_t *)inode->data, 
                                 NFS_BLKS_SZ(1)) != NFS_ERROR_NONE) {
                 NFS_DBG("[%s] io error\n", __func__);
                 return NULL;                    
