@@ -80,7 +80,6 @@ struct nfs_super {
     uint32_t magic;
     int      driver_fd;
     /* TODO: Define yourself */
-
     int                sz_io;
     int                sz_disk;
     int                sz_usage;
